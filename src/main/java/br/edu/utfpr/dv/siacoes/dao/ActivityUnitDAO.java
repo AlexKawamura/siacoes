@@ -71,43 +71,48 @@ public class ActivityUnitDAO {
 	
 	public int save(int idUser, ActivityUnit unit) throws SQLException{
 		boolean insert = (unit.getIdActivityUnit() == 0);
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			
-			if(insert){
-				stmt = conn.prepareStatement("INSERT INTO activityunit(description, fillAmount, amountDescription) VALUES(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-                                stmt.setString(1, unit.getDescription());
-                                stmt.setInt(2, (unit.isFillAmount() ? 1 : 0));
-                                stmt.setString(3, unit.getAmountDescription());
-
-                                stmt.execute();
-
-                                rs = stmt.getGeneratedKeys();
-
-                                if(rs.next()){
-                                        unit.setIdActivityUnit(rs.getInt(1));
-                                }
-
-                                new UpdateEvent(conn).registerInsert(idUser, unit);
-
-                                return unit.getIdActivityUnit();
-			} else {
-				return this.update(idUser, unit);
-			}
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
+                	
+                if(insert){
+                        return this.insert(idUser, unit);
+                } else {
+                        return this.update(idUser, unit);
 		}
 	}
+        
+        private int insert(int idUser, ActivityUnit unit) throws SQLException {
+                Connection conn = null;
+                PreparedStatement stmt = null;
+                ResultSet rs = null;
+                    
+                try{
+                        conn = ConnectionDAO.getInstance().getConnection();
+                                
+                        stmt = conn.prepareStatement("INSERT INTO activityunit(description, fillAmount, amountDescription) VALUES(?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+                        stmt.setString(1, unit.getDescription());
+                        stmt.setInt(2, (unit.isFillAmount() ? 1 : 0));
+                        stmt.setString(3, unit.getAmountDescription());
+
+                        stmt.execute();
+                                
+                        rs = stmt.getGeneratedKeys();
+
+                        if(rs.next()){
+                                unit.setIdActivityUnit(rs.getInt(1));
+                        }
+                                
+                        new UpdateEvent(conn).registerInsert(idUser, unit);
+
+                        return unit.getIdActivityUnit();
+                }finally{
+                        if((rs != null) && !rs.isClosed())
+                                rs.close();
+                        if((stmt != null) && !stmt.isClosed())
+                                stmt.close();
+                        if((conn != null) && !conn.isClosed())
+                                conn.close();
+                }
+        }
         
         private int update(int idUser, ActivityUnit unit) throws SQLException {
                 Connection conn = null;
