@@ -69,7 +69,7 @@ public class ActivityUnitDAO {
 		}
 	}
 	
-	public int save(int idUser, ActivityUnit unit) throws SQLException{
+	public int save(int idUser, ActivityUnit unit){
 		boolean insert = (unit.getIdActivityUnit() == 0);
                 	
                 if(insert){
