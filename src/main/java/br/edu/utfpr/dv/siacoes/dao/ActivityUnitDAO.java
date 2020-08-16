@@ -13,6 +13,7 @@ import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
 
 public class ActivityUnitDAO {
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public List<ActivityUnit> listAll() throws SQLException{
                 String sql = "SELECT * FROM activityunit ORDER BY description";
             
@@ -32,6 +33,7 @@ public class ActivityUnitDAO {
 		}
 	}
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public ActivityUnit findById(int id) throws SQLException{
                 String sql = "SELECT * FROM activityunit WHERE idActivityUnit=?";
             
@@ -51,6 +53,8 @@ public class ActivityUnitDAO {
 		}
 	}
 	
+        // Separando insert e update em duas funções, diminuindo quantidade de if-else.
+        // Podendo melhorar o entendimento do que será feito pelo código.
 	public int save(int idUser, ActivityUnit unit){
 		boolean insert = (unit.getIdActivityUnit() == 0);
                 	
@@ -61,6 +65,8 @@ public class ActivityUnitDAO {
 		}
 	}
         
+        // Criado método para realizar apenas o INSERT.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int insert(int idUser, ActivityUnit unit) throws SQLException {
                 String sql = "INSERT INTO activityunit(description, fillAmount, amountDescription) VALUES(?, ?, ?)";
             
@@ -86,6 +92,8 @@ public class ActivityUnitDAO {
                 }
         }
         
+        // Criado método para realizar apenas o UPDATE.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int update(int idUser, ActivityUnit unit) throws SQLException {
                 String sql = "UPDATE activityunit SET description=?, fillAmount=?, amountDescription=? WHERE idActivityUnit=?";
             

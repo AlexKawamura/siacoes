@@ -14,6 +14,7 @@ import br.edu.utfpr.dv.siacoes.model.Department;
 
 public class DepartmentDAO {
 
+        // Removido finally com método close() e substituido por try-with-resource.
 	public Department findById(int id) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
@@ -35,6 +36,7 @@ public class DepartmentDAO {
 		}
 	}
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public List<Department> listAll(boolean onlyActive) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " + 
@@ -55,6 +57,7 @@ public class DepartmentDAO {
 		}
 	}
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public List<Department> listByCampus(int idCampus, boolean onlyActive) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
@@ -75,6 +78,8 @@ public class DepartmentDAO {
 		}
 	}
 	
+        // Separando insert e update em duas funções, diminuindo quantidade de if-else.
+        // Podendo melhorar o entendimento do que será feito pelo código.
 	public int save(int idUser, Department department) throws SQLException{
 		boolean insert = (department.getIdDepartment() == 0);
 		
@@ -85,6 +90,8 @@ public class DepartmentDAO {
                 }
 	}
         
+        // Criado método para realizar apenas o INSERT.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int insert(int idUser, Department department) throws SQLException{
                 String sql = "INSERT INTO department(idCampus, name, logo, active, site, fullName, initials) VALUES(?, ?, ?, ?, ?, ?, ?)";
                 
@@ -118,6 +125,8 @@ public class DepartmentDAO {
                 }
         }
         
+        // Criado método para realizar apenas o UPDATE.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int update(int idUser, Department department) throws SQLException{
                 String sql = "UPDATE department SET idCampus=?, name=?, logo=?, active=?, site=?, fullName=?, initials=? WHERE idDepartment=?";
                 

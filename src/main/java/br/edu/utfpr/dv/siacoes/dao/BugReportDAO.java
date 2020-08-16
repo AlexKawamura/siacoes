@@ -15,6 +15,7 @@ import br.edu.utfpr.dv.siacoes.model.User;
 
 public class BugReportDAO {
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public BugReport findById(int id) throws SQLException{
                 String sql = "SELECT bugreport.*, \"user\".name " + 
                             "FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
@@ -36,6 +37,7 @@ public class BugReportDAO {
 		}
 	}
 	
+        // Removido finally com método close() e substituido por try-with-resource.
 	public List<BugReport> listAll() throws SQLException{
                 String sql = "SELECT bugreport.*, \"user\".name " +
                             "FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
@@ -56,6 +58,8 @@ public class BugReportDAO {
 		}
 	}
 	
+        // Separando insert e update em duas funções, diminuindo quantidade de if-else.
+        // Podendo melhorar o entendimento do que será feito pelo código.
 	public int save(BugReport bug) throws SQLException{
 		boolean insert = (bug.getIdBugReport() == 0);
                 
@@ -66,6 +70,8 @@ public class BugReportDAO {
 		}
 	}
         
+        // Criado método para realizar apenas o INSERT.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int insert(BugReport bug) throws SQLException{
                 String sql = "INSERT INTO bugreport(idUser, module, title, description, reportDate, type, status, statusDate, statusDescription) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
@@ -99,6 +105,8 @@ public class BugReportDAO {
 		}
 	}
         
+        // Criado método para realizar apenas o UPDATE.
+        // Removido finally com método close() e substituido por try-with-resource.
         private int update(BugReport bug) throws SQLException{
                 String sql = "UPDATE bugreport SET idUser=?, module=?, title=?, description=?, reportDate=?, type=?, status=?, statusDate=?, statusDescription=? WHERE idBugReport=?";
 		
