@@ -83,20 +83,55 @@ public class DepartmentDAO {
 	
 	public int save(int idUser, Department department) throws SQLException{
 		boolean insert = (department.getIdDepartment() == 0);
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
 		
-		try{
-			conn = ConnectionDAO.getInstance().getConnection();
-			
-			if(insert){
-				stmt = conn.prepareStatement("INSERT INTO department(idCampus, name, logo, active, site, fullName, initials) VALUES(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-			}else{
-				stmt = conn.prepareStatement("UPDATE department SET idCampus=?, name=?, logo=?, active=?, site=?, fullName=?, initials=? WHERE idDepartment=?");
-			}
-			
-			stmt.setInt(1, department.getCampus().getIdCampus());
+		if(insert) {
+                    return insert(idUser, department);
+                } else {
+                    return update(idUser, department);
+                }
+	}
+        
+        private int insert(int idUser, Department department) throws SQLException{
+                String sql = "INSERT INTO department(idCampus, name, logo, active, site, fullName, initials) VALUES(?, ?, ?, ?, ?, ?, ?)";
+                
+                try(
+                        Connection conn = ConnectionDAO.getInstance().getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ){
+                        stmt.setInt(1, department.getCampus().getIdCampus());
+                        stmt.setString(2, department.getName());
+                        if(department.getLogo() == null){
+                                stmt.setNull(3, Types.BINARY);
+                        }else{
+                                stmt.setBytes(3, department.getLogo());	
+                        }
+                        stmt.setInt(4, department.isActive() ? 1 : 0);
+                        stmt.setString(5, department.getSite());
+                        stmt.setString(6, department.getFullName());
+                        stmt.setString(7, department.getInitials());
+
+                        stmt.execute();
+
+                        try(ResultSet rs = stmt.getGeneratedKeys()) {
+                            if(rs.next()){
+                                department.setIdDepartment(rs.getInt(1));
+                            }
+
+                            new UpdateEvent(conn).registerInsert(idUser, department);
+
+                            return department.getIdDepartment();
+                        }
+                }
+        }
+        
+        private int update(int idUser, Department department) throws SQLException{
+                String sql = "UPDATE department SET idCampus=?, name=?, logo=?, active=?, site=?, fullName=?, initials=? WHERE idDepartment=?";
+                
+                try(
+                        Connection conn = ConnectionDAO.getInstance().getConnection();
+                        PreparedStatement stmt = conn.prepareStatement(sql);
+                ){
+                        stmt.setInt(1, department.getCampus().getIdCampus());
 			stmt.setString(2, department.getName());
 			if(department.getLogo() == null){
 				stmt.setNull(3, Types.BINARY);
@@ -107,35 +142,15 @@ public class DepartmentDAO {
 			stmt.setString(5, department.getSite());
 			stmt.setString(6, department.getFullName());
 			stmt.setString(7, department.getInitials());
-			
-			if(!insert){
-				stmt.setInt(8, department.getIdDepartment());
-			}
-			
-			stmt.execute();
-			
-			if(insert){
-				rs = stmt.getGeneratedKeys();
-				
-				if(rs.next()){
-					department.setIdDepartment(rs.getInt(1));
-				}
-
-				new UpdateEvent(conn).registerInsert(idUser, department);
-			} else {
-				new UpdateEvent(conn).registerUpdate(idUser, department);
-			}
-			
-			return department.getIdDepartment();
-		}finally{
-			if((rs != null) && !rs.isClosed())
-				rs.close();
-			if((stmt != null) && !stmt.isClosed())
-				stmt.close();
-			if((conn != null) && !conn.isClosed())
-				conn.close();
-		}
-	}
+                        stmt.setInt(8, department.getIdDepartment());
+                        
+                        stmt.execute();
+                        
+                        new UpdateEvent(conn).registerUpdate(idUser, department);
+                        
+                        return department.getIdDepartment();
+                }
+        }
 	
 	private Department loadObject(ResultSet rs) throws SQLException{
 		Department department = new Department();
