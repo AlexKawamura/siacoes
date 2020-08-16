@@ -36,48 +36,42 @@ public class DepartmentDAO {
 	}
 	
 	public List<Department> listAll(boolean onlyActive) throws SQLException{
+                String sql = "SELECT department.*, campus.name AS campusName " +
+                            "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " + 
+                            (onlyActive ? " WHERE department.active=1" : "") + 
+                            " ORDER BY department.name";
 		try(
                        Connection conn = ConnectionDAO.getInstance().getConnection();
                        Statement stmt = conn.createStatement();
+                       ResultSet rs = stmt.executeQuery(sql)
                 ){
-                        String sql = "SELECT department.*, campus.name AS campusName " +
-				"FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " + 
-				(onlyActive ? " WHERE department.active=1" : "") + 
-                                " ORDER BY department.name";
-                    
-                        try(ResultSet rs = stmt.executeQuery(sql)) {
-			
-                            List<Department> list = new ArrayList<Department>();
+                        List<Department> list = new ArrayList<Department>();
 
-                            while(rs.next()){
-                                    list.add(this.loadObject(rs));
-                            }
-
-                            return list;
+                        while(rs.next()){
+                                list.add(this.loadObject(rs));
                         }
+
+                        return list;
 		}
 	}
 	
 	public List<Department> listByCampus(int idCampus, boolean onlyActive) throws SQLException{
+                String sql = "SELECT department.*, campus.name AS campusName " +
+                            "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
+                            "WHERE department.idCampus=" + String.valueOf(idCampus) + (onlyActive ? " AND department.active=1" : "") + 
+                            " ORDER BY department.name";
 		try(
                         Connection conn = ConnectionDAO.getInstance().getConnection();
                         Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
                 ){
-                        String sql = "SELECT department.*, campus.name AS campusName " +
-                                    "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
-                                    "WHERE department.idCampus=" + String.valueOf(idCampus) + (onlyActive ? " AND department.active=1" : "") + 
-                                    " ORDER BY department.name";
-                    
-                        try(ResultSet rs = stmt.executeQuery(sql)){
-			
-                            List<Department> list = new ArrayList<Department>();
+                        List<Department> list = new ArrayList<Department>();
 
-                            while(rs.next()){
-                                    list.add(this.loadObject(rs));
-                            }
-
-                            return list;
+                        while(rs.next()){
+                                list.add(this.loadObject(rs));
                         }
+
+                        return list;
 		}
 	}
 	

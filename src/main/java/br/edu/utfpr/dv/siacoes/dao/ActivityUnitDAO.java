@@ -14,23 +14,21 @@ import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
 public class ActivityUnitDAO {
 	
 	public List<ActivityUnit> listAll() throws SQLException{
+                String sql = "SELECT * FROM activityunit ORDER BY description";
             
 		try(
                         Connection conn = ConnectionDAO.getInstance().getConnection();
 			Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
                 ){
-                        String sql = "SELECT * FROM activityunit ORDER BY description";
-                        
-                        try(ResultSet rs = stmt.executeQuery(sql)){
+                        List<ActivityUnit> list = new ArrayList<ActivityUnit>();
 
-                                List<ActivityUnit> list = new ArrayList<ActivityUnit>();
-
-                                while(rs.next()){
-                                        list.add(this.loadObject(rs));
-                                }
-
-                                return list;
+                        while(rs.next()){
+                                list.add(this.loadObject(rs));
                         }
+
+                        return list;
+                        
 		}
 	}
 	
