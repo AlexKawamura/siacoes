@@ -11,7 +11,6 @@ import java.util.List;
 
 import br.edu.utfpr.dv.siacoes.model.BugReport;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugStatus;
-import br.edu.utfpr.dv.siacoes.model.Module;
 import br.edu.utfpr.dv.siacoes.model.User;
 
 public class BugReportDAO {
