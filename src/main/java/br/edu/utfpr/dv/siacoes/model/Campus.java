@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import lombok.Data;
 
-public @Data class Campus implements Serializable {
+@Data
+public class Campus implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -15,5 +16,15 @@ public @Data class Campus implements Serializable {
 	private boolean active;
 	private String site;
 	private String initials;
+	
+	public Campus(){
+		this.setIdCampus(0);
+		this.setName("");
+		this.setAddress("");
+		this.setLogo(null);
+		this.setActive(true);
+		this.setSite("");
+		this.setInitials("");
+	}
 
 }
