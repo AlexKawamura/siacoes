@@ -8,13 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.utfpr.dv.siacoes.bo.ActivityUnitBO;
 import br.edu.utfpr.dv.siacoes.log.UpdateEvent;
 import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
 
-public class ActivityUnitDAO {
+public class ActivityUnitDAO extends ActivityUnitBO{
 
 	// Removido finally com método close() e substituido por try-with-resource.
-	public List<ActivityUnit> listAll() throws SQLException {
+	public List<ActivityUnit> listAllDAO() throws SQLException {
 		String sql = "SELECT * FROM activityunit ORDER BY description";
 
 		try (Connection conn = ConnectionDAO.getInstance().getConnection();
@@ -32,7 +33,7 @@ public class ActivityUnitDAO {
 	}
 
 	// Removido finally com método close() e substituido por try-with-resource.
-	public ActivityUnit findById(int id) throws SQLException {
+	public ActivityUnit findByIdDAO(int id) throws SQLException {
 		String sql = "SELECT * FROM activityunit WHERE idActivityUnit=?";
 
 		try (Connection conn = ConnectionDAO.getInstance().getConnection();
@@ -50,8 +51,7 @@ public class ActivityUnitDAO {
 	}
 
 	// Separando insert e update em duas funções, diminuindo quantidade de if-else.
-	// Podendo melhorar o entendimento do que será feito pelo código.
-	public int save(int idUser, ActivityUnit unit) throws SQLException {
+	public int saveDAO(int idUser, ActivityUnit unit) throws SQLException {
 		boolean insert = (unit.getIdActivityUnit() == 0);
 
 		if (insert) {

@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.window;
+package br.edu.utfpr.dv.siacoes.window;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -35,6 +35,7 @@ import br.edu.utfpr.dv.siacoes.components.FileUploader;
 import br.edu.utfpr.dv.siacoes.components.FileUploaderListener;
 import br.edu.utfpr.dv.siacoes.components.SemesterComboBox;
 import br.edu.utfpr.dv.siacoes.components.YearField;
+import br.edu.utfpr.dv.siacoes.dao.ActivityUnitDAO;
 import br.edu.utfpr.dv.siacoes.model.Activity;
 import br.edu.utfpr.dv.siacoes.model.ActivityGroup;
 import br.edu.utfpr.dv.siacoes.model.ActivitySubmission;
@@ -301,7 +302,7 @@ public class EditActivitySubmissionWindow extends EditWindow {
 				this.textAmount.setVisible(false);
 				this.textValidatedAmount.setVisible(false);
 			} else {
-				ActivityUnit unit = new ActivityUnitBO().findById(activity.getUnit().getIdActivityUnit());
+				ActivityUnit unit = new ActivityUnitDAO().findById(activity.getUnit().getIdActivityUnit());
 				
 				if((unit == null) || (unit.getIdActivityUnit() == 0)) {
 					this.textAmount.setVisible(false);
