@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.window;
+package br.edu.utfpr.dv.siacoes.window;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import br.edu.utfpr.dv.siacoes.Session;
 import br.edu.utfpr.dv.siacoes.bo.BugReportBO;
+import br.edu.utfpr.dv.siacoes.dao.BugReportDAO;
 import br.edu.utfpr.dv.siacoes.model.BugReport;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugStatus;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugType;
@@ -167,7 +168,7 @@ public class EditBugReportWindow extends EditWindow {
 	@Override
 	public void save() {
 		try{
-			BugReportBO bo = new BugReportBO();
+			BugReportBO bo = new BugReportDAO();
 			
 			this.bug.setTitle(this.textTitle.getValue());
 			this.bug.setModule((SystemModule)this.comboModule.getValue());

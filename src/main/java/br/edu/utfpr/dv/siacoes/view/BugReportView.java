@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.view;
+package br.edu.utfpr.dv.siacoes.view;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -8,6 +8,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 import br.edu.utfpr.dv.siacoes.bo.BugReportBO;
+import br.edu.utfpr.dv.siacoes.dao.BugReportDAO;
 import br.edu.utfpr.dv.siacoes.model.BugReport;
 import br.edu.utfpr.dv.siacoes.model.Module.SystemModule;
 import br.edu.utfpr.dv.siacoes.window.EditBugReportWindow;
@@ -36,7 +37,7 @@ public class BugReportView extends ListView {
 		this.getGrid().getColumns().get(2).setWidth(150);
 		
 		try {
-			BugReportBO bo = new BugReportBO();
+			BugReportBO bo = new BugReportDAO();
 			List<BugReport> list = bo.listAll();
 			
 			for(BugReport bug : list){
@@ -58,7 +59,7 @@ public class BugReportView extends ListView {
 	@Override
 	public void editClick(Object id) {
 		try{
-			BugReportBO bo = new BugReportBO();
+			BugReportBO bo = new BugReportDAO();
 			BugReport bug = bo.findById((int)id);
 			
 			UI.getCurrent().addWindow(new EditBugReportWindow(bug, this));
