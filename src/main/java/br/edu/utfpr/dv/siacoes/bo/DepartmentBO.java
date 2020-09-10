@@ -1,19 +1,21 @@
-﻿package br.edu.utfpr.dv.siacoes.bo;
+package br.edu.utfpr.dv.siacoes.bo;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import br.edu.utfpr.dv.siacoes.dao.DepartmentDAO;
 import br.edu.utfpr.dv.siacoes.model.Department;
 
-public class DepartmentBO {
+public abstract class DepartmentBO {
+	public abstract Department findByIdDAO(int id) throws SQLException;
+	public abstract List<Department> listAllDAO(boolean onlyActive) throws SQLException;
+	public abstract List<Department> listByCampusDAO(int idCampus, boolean onlyActive) throws SQLException;
+	public abstract int saveDAO(int idUser, Department department) throws SQLException;
 	
 	public Department findById(int id) throws Exception{
 		try{
-			DepartmentDAO dao = new DepartmentDAO();
-			
-			return dao.findById(id);
+			return findByIdDAO(id);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -23,9 +25,7 @@ public class DepartmentBO {
 	
 	public List<Department> listAll(boolean onlyActive) throws Exception{
 		try{
-			DepartmentDAO dao = new DepartmentDAO();
-			
-			return dao.listAll(onlyActive);
+			return listAllDAO(onlyActive);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -35,9 +35,7 @@ public class DepartmentBO {
 	
 	public List<Department> listByCampus(int idCampus, boolean onlyActive) throws Exception{
 		try{
-			DepartmentDAO dao = new DepartmentDAO();
-			
-			return dao.listByCampus(idCampus, onlyActive);
+			return listByCampusDAO(idCampus, onlyActive);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -54,9 +52,7 @@ public class DepartmentBO {
 		}
 		
 		try{
-			DepartmentDAO dao = new DepartmentDAO();
-			
-			return dao.save(idUser, department);
+			return saveDAO(idUser, department);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			

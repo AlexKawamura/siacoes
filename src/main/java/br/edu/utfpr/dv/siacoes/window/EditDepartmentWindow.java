@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.window;
+package br.edu.utfpr.dv.siacoes.window;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -17,6 +17,7 @@ import br.edu.utfpr.dv.siacoes.bo.DepartmentBO;
 import br.edu.utfpr.dv.siacoes.components.CampusComboBox;
 import br.edu.utfpr.dv.siacoes.components.FileUploader;
 import br.edu.utfpr.dv.siacoes.components.FileUploaderListener;
+import br.edu.utfpr.dv.siacoes.dao.DepartmentDAO;
 import br.edu.utfpr.dv.siacoes.model.Department;
 import br.edu.utfpr.dv.siacoes.model.Document.DocumentType;
 import br.edu.utfpr.dv.siacoes.util.DateUtils;
@@ -125,7 +126,7 @@ public class EditDepartmentWindow extends EditWindow {
 	@Override
 	public void save() {
 		try{
-			DepartmentBO bo = new DepartmentBO();
+			DepartmentBO bo = new DepartmentDAO();
 			
 			this.department.setCampus(this.comboCampus.getCampus());
 			this.department.setName(this.textName.getValue());

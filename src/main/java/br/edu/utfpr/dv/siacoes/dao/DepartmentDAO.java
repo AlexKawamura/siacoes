@@ -9,13 +9,14 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.utfpr.dv.siacoes.bo.DepartmentBO;
 import br.edu.utfpr.dv.siacoes.log.UpdateEvent;
 import br.edu.utfpr.dv.siacoes.model.Department;
 
-public class DepartmentDAO {
+public class DepartmentDAO extends DepartmentBO{
 
         // Removido finally com método close() e substituido por try-with-resource.
-	public Department findById(int id) throws SQLException{
+	public Department findByIdDAO(int id) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
                             "WHERE idDepartment = ?";
@@ -37,7 +38,7 @@ public class DepartmentDAO {
 	}
 	
         // Removido finally com método close() e substituido por try-with-resource.
-	public List<Department> listAll(boolean onlyActive) throws SQLException{
+	public List<Department> listAllDAO(boolean onlyActive) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " + 
                             (onlyActive ? " WHERE department.active=1" : "") + 
@@ -58,7 +59,7 @@ public class DepartmentDAO {
 	}
 	
         // Removido finally com método close() e substituido por try-with-resource.
-	public List<Department> listByCampus(int idCampus, boolean onlyActive) throws SQLException{
+	public List<Department> listByCampusDAO(int idCampus, boolean onlyActive) throws SQLException{
                 String sql = "SELECT department.*, campus.name AS campusName " +
                             "FROM department INNER JOIN campus ON campus.idCampus=department.idCampus " +
                             "WHERE department.idCampus=" + String.valueOf(idCampus) + (onlyActive ? " AND department.active=1" : "") + 
@@ -80,7 +81,7 @@ public class DepartmentDAO {
 	
         // Separando insert e update em duas funções, diminuindo quantidade de if-else.
         // Podendo melhorar o entendimento do que será feito pelo código.
-	public int save(int idUser, Department department) throws SQLException{
+	public int saveDAO(int idUser, Department department) throws SQLException{
 		boolean insert = (department.getIdDepartment() == 0);
 		
 		if(insert) {

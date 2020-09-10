@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.components;
+package br.edu.utfpr.dv.siacoes.components;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.vaadin.ui.NativeSelect;
 
 import br.edu.utfpr.dv.siacoes.bo.DepartmentBO;
+import br.edu.utfpr.dv.siacoes.dao.DepartmentDAO;
 import br.edu.utfpr.dv.siacoes.model.Department;
 
 public class DepartmentComboBox extends NativeSelect {
@@ -53,7 +54,7 @@ public class DepartmentComboBox extends NativeSelect {
 		
 		if(!find){
 			try {
-				DepartmentBO bo = new DepartmentBO();
+				DepartmentBO bo = new DepartmentDAO();
 				Department department = bo.findById(c.getIdDepartment());
 				
 				if(department.getCampus().getIdCampus() == this.getIdCampus()){
@@ -71,7 +72,7 @@ public class DepartmentComboBox extends NativeSelect {
 			this.removeAllItems();
 			
 			if(this.getIdCampus() != 0){
-				DepartmentBO bo = new DepartmentBO();
+				DepartmentBO bo = new DepartmentDAO();
 				this.list = bo.listByCampus(this.getIdCampus(), true);
 				
 				this.addItems(this.list);
