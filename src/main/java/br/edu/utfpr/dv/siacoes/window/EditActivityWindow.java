@@ -17,6 +17,7 @@ import br.edu.utfpr.dv.siacoes.bo.CampusBO;
 import br.edu.utfpr.dv.siacoes.components.CampusComboBox;
 import br.edu.utfpr.dv.siacoes.components.DepartmentComboBox;
 import br.edu.utfpr.dv.siacoes.dao.ActivityUnitDAO;
+import br.edu.utfpr.dv.siacoes.dao.TemplateMethod;
 import br.edu.utfpr.dv.siacoes.model.Activity;
 import br.edu.utfpr.dv.siacoes.model.ActivityGroup;
 import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
@@ -106,7 +107,7 @@ public class EditActivityWindow extends EditWindow {
 	
 	private void loadComboUnit(){
 		try{
-			ActivityUnitBO bo = new ActivityUnitDAO();
+			ActivityUnitBO bo = new ActivityUnitBO();
 			List<ActivityUnit> list = bo.listAll();
 			
 			this.comboUnit.removeAllItems();

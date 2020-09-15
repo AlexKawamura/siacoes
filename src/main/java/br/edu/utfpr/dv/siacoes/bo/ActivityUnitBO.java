@@ -6,16 +6,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.edu.utfpr.dv.siacoes.dao.ActivityUnitDAO;
+import br.edu.utfpr.dv.siacoes.dao.TemplateMethod;
 import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
 
-public abstract class ActivityUnitBO {
-	public abstract List<ActivityUnit> listAllDAO() throws SQLException;
-	public abstract ActivityUnit findByIdDAO(int id) throws SQLException;
-	public abstract int saveDAO(int idUser, ActivityUnit unit) throws SQLException;
+public class ActivityUnitBO {
 	
 	public List<ActivityUnit> listAll() throws Exception{
 		try{
-			return listAllDAO();
+			ActivityUnitDAO dao = new ActivityUnitDAO();
+			
+			return dao.listAll();
 		}catch(SQLException e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -25,7 +25,9 @@ public abstract class ActivityUnitBO {
 	
 	public ActivityUnit findById(int id) throws Exception{
 		try{
-			return findByIdDAO(id);
+			TemplateMethod<ActivityUnit> tm = new ActivityUnitDAO();
+			
+			return tm.findById(id);
 		}catch(SQLException e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -45,7 +47,9 @@ public abstract class ActivityUnitBO {
 		}
 		
 		try{
-			return saveDAO(idUser, unit);
+			ActivityUnitDAO dao = new ActivityUnitDAO();
+			
+			return dao.save(idUser, unit);
 		}catch(SQLException e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
