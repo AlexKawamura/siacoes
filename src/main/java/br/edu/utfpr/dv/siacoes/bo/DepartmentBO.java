@@ -5,17 +5,19 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import br.edu.utfpr.dv.siacoes.dao.ActivityUnitDAO;
+import br.edu.utfpr.dv.siacoes.dao.DepartmentDAO;
+import br.edu.utfpr.dv.siacoes.dao.TemplateMethod;
+import br.edu.utfpr.dv.siacoes.model.ActivityUnit;
 import br.edu.utfpr.dv.siacoes.model.Department;
 
-public abstract class DepartmentBO {
-	public abstract Department findByIdDAO(int id) throws SQLException;
-	public abstract List<Department> listAllDAO(boolean onlyActive) throws SQLException;
-	public abstract List<Department> listByCampusDAO(int idCampus, boolean onlyActive) throws SQLException;
-	public abstract int saveDAO(int idUser, Department department) throws SQLException;
+public class DepartmentBO {
 	
 	public Department findById(int id) throws Exception{
 		try{
-			return findByIdDAO(id);
+			TemplateMethod<Department> tm = new DepartmentDAO();
+			
+			return tm.findById(id);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -25,7 +27,9 @@ public abstract class DepartmentBO {
 	
 	public List<Department> listAll(boolean onlyActive) throws Exception{
 		try{
-			return listAllDAO(onlyActive);
+			DepartmentDAO dao = new DepartmentDAO();
+			
+			return dao.listAll(onlyActive);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -35,7 +39,9 @@ public abstract class DepartmentBO {
 	
 	public List<Department> listByCampus(int idCampus, boolean onlyActive) throws Exception{
 		try{
-			return listByCampusDAO(idCampus, onlyActive);
+			DepartmentDAO dao = new DepartmentDAO();
+			
+			return dao.listByCampus(idCampus, onlyActive);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -52,7 +58,9 @@ public abstract class DepartmentBO {
 		}
 		
 		try{
-			return saveDAO(idUser, department);
+			DepartmentDAO dao = new DepartmentDAO();
+			
+			return dao.save(idUser, department);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			

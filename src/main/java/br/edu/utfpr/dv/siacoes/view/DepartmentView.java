@@ -44,7 +44,7 @@ public class DepartmentView extends ListView {
 		this.getGrid().getColumns().get(1).setWidth(100);
 		
 		try{
-			DepartmentBO bo = new DepartmentDAO();
+			DepartmentBO bo = new DepartmentBO();
 			List<Department> list = bo.listByCampus((this.comboCampus.getCampus() == null ? 0 : this.comboCampus.getCampus().getIdCampus()), false);
 			
 			for(Department d : list){
@@ -70,7 +70,7 @@ public class DepartmentView extends ListView {
 	@Override
 	public void editClick(Object id) {
 		try{
-			DepartmentBO bo = new DepartmentDAO();
+			DepartmentBO bo = new DepartmentBO();
 			Department department = bo.findById((int)id);
 			
 			UI.getCurrent().addWindow(new EditDepartmentWindow(department, this));

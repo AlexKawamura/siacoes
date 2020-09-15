@@ -200,7 +200,7 @@ public class ReportUtils {
 		}
         
         try{
-        	DepartmentBO bo = new DepartmentDAO();
+        	DepartmentBO bo = new DepartmentBO();
         	Department d = bo.findById(idDepartment);
         	
         	department = d.getFullName();

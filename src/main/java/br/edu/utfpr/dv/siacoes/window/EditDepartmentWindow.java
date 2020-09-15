@@ -126,7 +126,7 @@ public class EditDepartmentWindow extends EditWindow {
 	@Override
 	public void save() {
 		try{
-			DepartmentBO bo = new DepartmentDAO();
+			DepartmentBO bo = new DepartmentBO();
 			
 			this.department.setCampus(this.comboCampus.getCampus());
 			this.department.setName(this.textName.getValue());

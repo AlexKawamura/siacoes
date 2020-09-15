@@ -29,7 +29,7 @@ public class InternshipPosterRequestBO {
 	
 	public List<InternshipPosterRequest> listBySemester(int idDepartment, int semester, int year) throws Exception {
 		try {
-			Semester s = new SemesterBO().findBySemester(new DepartmentDAO().findById(idDepartment).getCampus().getIdCampus(), semester, year);
+			Semester s = new SemesterBO().findBySemester(new DepartmentBO().findById(idDepartment).getCampus().getIdCampus(), semester, year);
 			
 			return new InternshipPosterRequestDAO().listByDate(idDepartment, DateUtils.getDayBegin(s.getStartDate()), DateUtils.getDayEnd(s.getEndDate()));
 		} catch (SQLException e) {
@@ -41,7 +41,7 @@ public class InternshipPosterRequestBO {
 	
 	public List<InternshipPosterRequest> listByAppraiser(int idDepartment, int idUser, int semester, int year) throws Exception {
 		try {
-			Semester s = new SemesterBO().findBySemester(new DepartmentDAO().findById(idDepartment).getCampus().getIdCampus(), semester, year);
+			Semester s = new SemesterBO().findBySemester(new DepartmentBO().findById(idDepartment).getCampus().getIdCampus(), semester, year);
 			
 			return new InternshipPosterRequestDAO().listByAppraiser(idUser, DateUtils.getDayBegin(s.getStartDate()), DateUtils.getDayEnd(s.getEndDate()));
 		} catch (SQLException e) {
@@ -245,7 +245,7 @@ public class InternshipPosterRequestBO {
 			report.setStudent(request.getInternship().getStudent());
 			report.setSupervisor(request.getInternship().getSupervisor());
 			report.setAppraisers(request.getAppraisers());
-			report.setDepartment(new DepartmentDAO().findById(request.getInternship().getDepartment().getIdDepartment()));
+			report.setDepartment(new DepartmentBO().findById(request.getInternship().getDepartment().getIdDepartment()));
 			report.getDepartment().setCampus(new CampusBO().findByDepartment(request.getInternship().getDepartment().getIdDepartment()));
 			report.setManager(new UserBO().findManager(request.getInternship().getDepartment().getIdDepartment(), SystemModule.SIGES));
 			report.setAppraisers(new InternshipPosterAppraiserRequestBO().listAppraisers(idInternshipPosterRequest));

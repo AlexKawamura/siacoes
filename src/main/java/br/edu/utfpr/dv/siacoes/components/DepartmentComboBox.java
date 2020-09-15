@@ -54,7 +54,7 @@ public class DepartmentComboBox extends NativeSelect {
 		
 		if(!find){
 			try {
-				DepartmentBO bo = new DepartmentDAO();
+				DepartmentBO bo = new DepartmentBO();
 				Department department = bo.findById(c.getIdDepartment());
 				
 				if(department.getCampus().getIdCampus() == this.getIdCampus()){
@@ -72,7 +72,7 @@ public class DepartmentComboBox extends NativeSelect {
 			this.removeAllItems();
 			
 			if(this.getIdCampus() != 0){
-				DepartmentBO bo = new DepartmentDAO();
+				DepartmentBO bo = new DepartmentBO();
 				this.list = bo.listByCampus(this.getIdCampus(), true);
 				
 				this.addItems(this.list);

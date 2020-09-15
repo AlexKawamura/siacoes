@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import br.edu.utfpr.dv.siacoes.dao.DepartmentDAO;
 import br.edu.utfpr.dv.siacoes.dao.FinalDocumentDAO;
 import br.edu.utfpr.dv.siacoes.model.Campus;
 import br.edu.utfpr.dv.siacoes.model.Deadline;
@@ -248,7 +247,7 @@ public class FinalDocumentBO {
 	public byte[] getLibraryReport(int idDepartment, int year, int semester) throws Exception{
 		try{
 			ByteArrayOutputStream ret = new ByteArrayOutputStream();
-			Department department = new DepartmentDAO().findById(idDepartment);
+			Department department = new DepartmentBO().findById(idDepartment);
 			Campus campus = new CampusBO().findById(department.getCampus().getIdCampus());
 			LibraryCoverReport cover = new LibraryCoverReport();
 			

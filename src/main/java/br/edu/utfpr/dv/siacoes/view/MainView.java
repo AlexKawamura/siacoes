@@ -68,7 +68,7 @@ public class MainView extends BasicView {
     
     private void loadImages(){
     	try{
-    		DepartmentBO dbo = new DepartmentDAO();
+    		DepartmentBO dbo = new DepartmentBO();
     		Department department = dbo.findById(Session.getSelectedDepartment().getDepartment().getIdDepartment());
     		
     		this.logoES.setResource(new ExternalResource(department.getSite()));
