@@ -14,18 +14,18 @@ import br.edu.utfpr.dv.siacoes.model.BugReport.BugStatus;
 import br.edu.utfpr.dv.siacoes.model.User;
 import br.edu.utfpr.dv.siacoes.model.Module;
 
-public class BugReportDAO {
+public class BugReportDAO extends TemplateMethod<BugReport>{
 	
-        // Removido finally com método close() e substituido por try-with-resource.
+    // Removido finally com método close() e substituido por try-with-resource.
 	public BugReport findById(int id) throws SQLException{
-                String sql = "SELECT bugreport.*, \"user\".name " + 
-                            "FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
-                            "WHERE idBugReport = ?";
-		
+		String sql = "SELECT bugreport.*, \"user\".name " + 
+                     "FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
+                     "WHERE idBugReport = ?";
+	
 		try(
-                        Connection conn = ConnectionDAO.getInstance().getConnection();
-                        PreparedStatement stmt = conn.prepareStatement(sql);
-                ){
+				Connection conn = ConnectionDAO.getInstance().getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				){
 			stmt.setInt(1, id);
 			
 			try(ResultSet rs = stmt.executeQuery()){
@@ -40,15 +40,15 @@ public class BugReportDAO {
 	
         // Removido finally com método close() e substituido por try-with-resource.
 	public List<BugReport> listAll() throws SQLException{
-                String sql = "SELECT bugreport.*, \"user\".name " +
-                            "FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
-                            "ORDER BY status, reportdate";
+		String sql = "SELECT bugreport.*, \"user\".name " +
+					"FROM bugreport INNER JOIN \"user\" ON \"user\".idUser=bugreport.idUser " +
+					"ORDER BY status, reportdate";
             
 		try(
-                        Connection conn = ConnectionDAO.getInstance().getConnection();
-			Statement stmt = conn.createStatement();
-                        ResultSet rs = stmt.executeQuery(sql);
-                ){
+				Connection conn = ConnectionDAO.getInstance().getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				){
 			List<BugReport> list = new ArrayList<BugReport>();
 			
 			while(rs.next()){

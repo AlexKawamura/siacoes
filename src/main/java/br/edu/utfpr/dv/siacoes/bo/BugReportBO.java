@@ -1,4 +1,4 @@
-﻿package br.edu.utfpr.dv.siacoes.bo;
+package br.edu.utfpr.dv.siacoes.bo;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import br.edu.utfpr.dv.siacoes.dao.BugReportDAO;
+import br.edu.utfpr.dv.siacoes.dao.TemplateMethod;
 import br.edu.utfpr.dv.siacoes.model.BugReport;
 import br.edu.utfpr.dv.siacoes.model.EmailMessageEntry;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugStatus;
@@ -83,9 +84,9 @@ public class BugReportBO {
 	
 	public BugReport findById(int id) throws Exception{
 		try {
-			BugReportDAO dao = new BugReportDAO();
+			TemplateMethod<BugReport> tm = new BugReportDAO();
 			
-			return dao.findById(id);
+			return tm.findById(id);
 		} catch (SQLException e) {
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			

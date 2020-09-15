@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
@@ -15,7 +14,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import br.edu.utfpr.dv.siacoes.Session;
 import br.edu.utfpr.dv.siacoes.bo.BugReportBO;
-import br.edu.utfpr.dv.siacoes.dao.BugReportDAO;
 import br.edu.utfpr.dv.siacoes.model.BugReport;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugStatus;
 import br.edu.utfpr.dv.siacoes.model.BugReport.BugType;
@@ -168,7 +166,7 @@ public class EditBugReportWindow extends EditWindow {
 	@Override
 	public void save() {
 		try{
-			BugReportBO bo = new BugReportDAO();
+			BugReportBO bo = new BugReportBO();
 			
 			this.bug.setTitle(this.textTitle.getValue());
 			this.bug.setModule((SystemModule)this.comboModule.getValue());
